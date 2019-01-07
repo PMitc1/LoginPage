@@ -5,15 +5,13 @@ package schoolcouncillogin;
 
 public class SchoolCouncilLogin {
     
+    public static String saveDirectory; //K:\save.txt
+    
     static startScreen startGUI = new startScreen();
     
-    String[][] logins = new String[100][4];
-    //stores up to 100 logins at once. 
-    //First name, last name, email, 
     
-    public void endStartScreen() {
-        startGUI.dispose();
-    }
+    //stores up to 100 logins at once. 
+    //First name, last name, email,Phone number
     
     public static void main(String[] args) {
         //<editor-fold defaultstate="collapsed" desc=" Just learned editor folds, cool ">
@@ -41,16 +39,6 @@ public class SchoolCouncilLogin {
                 startGUI.setVisible(true);
             }
         });
-    
-        /*InputLibrary testing = new InputLibrary();
-        
-        String test = testing.getString(":");
-        char test2 = '\\';
-        
-        for (int i = 0; i < test.length(); i++) {
-            System.out.println(test+", "+test2+", "+(test.charAt(i)==test2));
-            
-        }*/
     }
     
 }

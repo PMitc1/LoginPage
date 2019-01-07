@@ -4,14 +4,16 @@
  * and open the template in the editor.
  */
 package schoolcouncillogin;
-
+import java.awt.Component;
 import javax.swing.JOptionPane;
-
 /**
  * @author S346902018
  */
 public class startScreen extends javax.swing.JFrame {
-
+    
+    createNewTxt newFile = new createNewTxt();
+    private Component frame;
+    
     //Creates new form startScreen
     public startScreen() {
         initComponents();
@@ -32,11 +34,14 @@ public class startScreen extends javax.swing.JFrame {
         startSubTitle1 = new javax.swing.JLabel();
         startSubTitle2 = new javax.swing.JLabel();
         startEnterb = new javax.swing.JButton();
+        newFileToggle = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(102, 0, 255));
 
-        directoryEntry.setText("e.g: C:/Users/Documents/logins.txt");
+        jPanel1.setBackground(new java.awt.Color(71, 0, 179));
+
+        directoryEntry.setText("e.g: C:\\Users\\Documents\\logins.txt");
         directoryEntry.setToolTipText("");
         directoryEntry.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -45,13 +50,16 @@ public class startScreen extends javax.swing.JFrame {
         });
 
         startTitle.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        startTitle.setForeground(new java.awt.Color(255, 255, 255));
         startTitle.setText("Please Enter a File Location");
         startTitle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         startSubTitle1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        startSubTitle1.setText("Leave blank for defult location.");
+        startSubTitle1.setForeground(new java.awt.Color(255, 255, 255));
+        startSubTitle1.setText("Leave blank for default location.");
 
         startSubTitle2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        startSubTitle2.setForeground(new java.awt.Color(255, 255, 255));
         startSubTitle2.setText("If there is no default it will be placed in the project file");
 
         startEnterb.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -61,6 +69,9 @@ public class startScreen extends javax.swing.JFrame {
                 startEnterbActionPerformed(evt);
             }
         });
+
+        newFileToggle.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        newFileToggle.setText("New File?");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -78,16 +89,19 @@ public class startScreen extends javax.swing.JFrame {
                         .addComponent(startSubTitle1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(74, 74, 74)
-                        .addComponent(startSubTitle2))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(179, 179, 179)
-                        .addComponent(startEnterb, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(31, Short.MAX_VALUE))
+                        .addComponent(startSubTitle2)))
+                .addContainerGap(32, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(80, 80, 80)
+                .addComponent(newFileToggle, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(startEnterb, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(98, 98, 98))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(44, 44, 44)
+                .addGap(38, 38, 38)
                 .addComponent(startTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(startSubTitle1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -96,7 +110,9 @@ public class startScreen extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(directoryEntry, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(startEnterb, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(newFileToggle, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(startEnterb, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE))
                 .addGap(50, 50, 50))
         );
 
@@ -118,24 +134,41 @@ public class startScreen extends javax.swing.JFrame {
     private void directoryEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_directoryEntryActionPerformed
         
     }//GEN-LAST:event_directoryEntryActionPerformed
-
+    
+   
     private void startEnterbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startEnterbActionPerformed
         String directory = directoryEntry.getText();
         ProgressSaving save = new ProgressSaving();
         
         directory = save.fixFileLocation(directory);
-        if (!save.testSave(directory)) { // if it doesn't already exist
-            JOptionPane.showMessageDialog(null,
-                "test","test",
-                JOptionPane.YES_NO_CANCEL_OPTION
-            );
-            return;
-        }
+        if (!save.testSave(directory) && !newFileToggle.isSelected()) { // if it doesn't already exist
+            newFile.setSaveTo(directory);
+            newFile.show();
+        } else if (newFileToggle.isSelected()) {
+            
+            if (save.newSave(directory)) {
+                SchoolCouncilLogin.saveDirectory = directory;
+                LoginGUI lgui = new LoginGUI();
+                lgui.show();
+                
+                this.dispose();
+                
+            } else {
+                JOptionPane.showMessageDialog(frame,
+                "File could not be created.",
+                "File Creation Error",
+                JOptionPane.ERROR_MESSAGE);
+            }
         
-        LoginGUI lgui = new LoginGUI();
-        lgui.show();
-        SchoolCouncilLogin closeSelfVar = new SchoolCouncilLogin();
-        closeSelfVar.endStartScreen();
+        } else {
+            LoginGUI lgui = new LoginGUI();
+            lgui.show();
+            //SchoolCouncilLogin closeSelfVar = new SchoolCouncilLogin();
+            //closeSelfVar.setSaveDirectory(directory);
+            SchoolCouncilLogin.saveDirectory = directory;
+            
+            this.dispose();
+        }
     }//GEN-LAST:event_startEnterbActionPerformed
 
     /**
@@ -176,6 +209,7 @@ public class startScreen extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField directoryEntry;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JToggleButton newFileToggle;
     private javax.swing.JButton startEnterb;
     private javax.swing.JLabel startSubTitle1;
     private javax.swing.JLabel startSubTitle2;

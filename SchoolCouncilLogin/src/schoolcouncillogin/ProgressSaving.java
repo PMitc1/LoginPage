@@ -11,9 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-/**
- * @author Peter Mitchell
- */
+//@author Peter Mitchell
 public class ProgressSaving {
 
     private static boolean isFloat(String str1) {
@@ -57,110 +55,103 @@ public class ProgressSaving {
                 return false;
             }
         } else {
-            System.out.println("Could not find file. exists: "+fileToSave.exists()+", is file: "+fileToSave.isFile());
+            //System.out.println("Could not find file. exists: "+fileToSave.exists()+", is file: "+fileToSave.isFile());
             return false;
         }
     }
     
-    public boolean makeSave(String fileLocation, float[] betsToSave) {
-        //File fileToSave = new File(fileLocation); //always use \\!!!
-        try {
-            BufferedReader fileToSave = new BufferedReader(new FileReader(fileLocation));
-            String line;
-            StringBuffer inputBuffer = new StringBuffer();
-
-            while ((line = fileToSave.readLine()) != null) {
-                inputBuffer.append(line+'\n');
-            }
-            String inputStr = inputBuffer.toString();
-            ArrayList<String> inputList = new ArrayList<String>(Arrays.asList(inputStr.split("\n")));
-            fileToSave.close();
-            
-
-            InputLibrary getInput = new InputLibrary();
-            System.out.println("Please make a save id. This is needed to retrieve the save in the future.");
-            String saveIdSearch;
-            
-            saveIdSearch = getInput.getString("please input the save id: ");
-            
-            boolean foundSave = false;
-            int startedPoint;
-            for (int i = 0; i < inputList.size(); i++) {
-                if (foundSave == false && inputList.get(i).equals("p"+saveIdSearch)) {
-                    foundSave = true;
-                } else if (foundSave && isFloat(inputList.get(i))) {
-                    //System.out.println("This is a test3."+i);
-                    startedPoint = i;
-                    inputList.set(i, Float.toString(betsToSave[i-startedPoint]));
-                    //startedPoint++;
-                } else if (foundSave) {
-                    break;
-                }
-            }
-            
-            if (foundSave == false) {
-                inputList.add("p"+saveIdSearch);
-                try {
-                    for (int i = 0; i < 11; i++) { 
-                        if (betsToSave[i] > 0) {
-                            inputList.add(Float.toString(betsToSave[i]));
-                        }
-                    }
-                } catch (Exception ex) {
-                    //do nothing.
-                }
-                    
-            }
-            
-            //inputStr = String.join("\n", inputList);
-            
-            FileOutputStream fileOut = new FileOutputStream(fileLocation);
-            //fileOut.write(inputStr.getBytes());
-            fileOut.close();
-            return true;
-        } catch (Exception e) {
-            System.out.println("an unknown error has occured."+e);
-            return false;
-        }
-    }
-    
-    public boolean newSave(String fileLocation, float[] betsToSave) {
+    //create the new file, and return if it worked
+    public boolean newSave(String fileLocation) { 
         //File fileToSave = new File(fileLocation); //always use \\!!!
         try {
             try {
                 File fileToSave = new File(fileLocation);
                 fileToSave.createNewFile(); 
+                return testSave(fileLocation);
             } catch (Exception ex) {
                 System.out.println("Failed to create file.");
                 return false;
             }
-            
-            ArrayList<String> inputList = new ArrayList<String>();
-
-            InputLibrary getInput = new InputLibrary();
-            System.out.println("Please make a save id. This is needed to retrieve the save in the future.");
-            String saveIdSearch;
-            saveIdSearch = getInput.getString("please input the save id: ");
-            
-            inputList.add("p"+saveIdSearch);
-            try {
-                for (int i = 0; i < 11; i++) { 
-                    if (betsToSave[i] > 0) {
-                        inputList.add(Float.toString(betsToSave[i]));
-                    }
-                }
-            } catch (Exception ex) {
-                //do nothing.
-            }
-            
-            //String saveString = String.join("\n", inputList); 
-            
-            FileOutputStream fileOut = new FileOutputStream(fileLocation);
-            //fileOut.write(saveString.getBytes());
-            fileOut.close();
-            return true;
         } catch (Exception e) {
             System.out.println("an unknown error has occured.");
+            return false;
+        }
+    }
+    
+    public boolean makeSave(String fileLocation, String[][] logins) {
+        //File fileToSave = new File(fileLocation); //always use \\!!!
+        try {
+            //variables used
+            BufferedReader fileToSave;
+            try {
+                fileToSave = new BufferedReader(new FileReader(fileLocation));
+            } catch (FileNotFoundException  error) {
+                System.out.println("File not found: "+error);
+                return false;
+            }
+            String line;
+            StringBuffer inputBuffer = new StringBuffer();
+            
+            //line by line getting the file so it doesn't overwrite
+            try {
+                while ((line = fileToSave.readLine()) != null) {
+                    inputBuffer.append(line+'\n');
+                }
+            } catch (Exception e) {
+                System.out.println("An unknown error has occured."+e);
+                return false;
+            }
+            String inputStr = inputBuffer.toString(); //turns the inputbuffer to a string
+            //splits the string by line breaks
+            ArrayList<String> inputList = new ArrayList<String>(Arrays.asList(inputStr.split("\n"))); 
+            try {
+                fileToSave.close(); //closes the file reader.
+            } catch (java.io.IOException e) {
+                System.out.println("File closing failed. (minor bug, should be able to be ignored)"+e);
+            }
+            for (int i = 0; i < inputList.size(); i++) {
+                for (String[] login : logins) {
+                    if (inputList.get(i).equals(login[0] + "," + login[1] + "," + login[2] + "," + login[3])) {
+                        for (int i3 = 0; i3 < login.length; i3++) {
+                            login[i3] = "";
+                        }
+                    }
+                }
+            }
+
+            try {
+                for (int i = 0; i < 100; i++) {
+                    //only put it in if it isn't empty.
+                    //System.out.println("attempt1: "+(!logins[i][0].equals("")&&!logins[i][1].equals("")&&!logins[i][2].equals("")));
+                    if (!logins[i][0].equals("")&&!logins[i][1].equals("")&&!logins[i][2].equals("")) {
+                        inputList.add((logins[i][0] + "," + logins[i][1] + "," + logins[i][2] + "," + logins[i][3]));
+                        //System.out.println("Test is this reached?");
+                    }
+                }
+            } catch (Exception e) {
+                //do nothing. This often gives a bugged error
+            }
+
+            FileOutputStream fileOut;
+            try {
+                fileOut = new FileOutputStream(fileLocation);
+            } catch (FileNotFoundException  error) {
+                System.out.println("File not found for writing: "+error);
+                return false;
+            }
+            inputStr = String.join(System.lineSeparator(), inputList);
+            //System.out.println(inputStr);
+            //System.out.println(inputStr.getBytes());
+            try {
+                fileOut.write(inputStr.getBytes());
+                fileOut.close();
+            } catch (java.io.IOException e) {
+                System.out.println("Possible file writing erorr."+e);
+            }
+            
+            return true;
+        } catch (Exception e) {
+            System.out.println("an unknown error has occured."+e);
             return false;
         }
     }

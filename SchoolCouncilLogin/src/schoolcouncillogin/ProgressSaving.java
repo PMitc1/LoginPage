@@ -13,19 +13,11 @@ import java.util.Scanner;
 
 //@author Peter Mitchell
 public class ProgressSaving {
-
-    private static boolean isFloat(String str1) {
-        try {
-            Float.parseFloat(str1);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
     
     public String fixFileLocation(String fileLocation) {
         int stringLength = fileLocation.length();
         for (int i = 0; i < stringLength; i++) {
+            stringLength = fileLocation.length();
             if (fileLocation.charAt(i) == '\\' && i+1 < stringLength && fileLocation.charAt(i+1) != '\\') {
                 fileLocation = fileLocation.substring(0, i)+"\\"+fileLocation.substring(i, stringLength);
                 i++;

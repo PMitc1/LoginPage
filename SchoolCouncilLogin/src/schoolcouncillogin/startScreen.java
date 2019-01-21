@@ -1,14 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package schoolcouncillogin;
+
 import java.awt.Component;
 import javax.swing.JOptionPane;
-/**
- * @author S346902018
- */
+
+//@author S346902018
+ 
 public class startScreen extends javax.swing.JFrame {
     
     createNewTxt newFile = new createNewTxt();
@@ -32,7 +29,6 @@ public class startScreen extends javax.swing.JFrame {
         directoryEntry = new javax.swing.JTextField();
         startTitle = new javax.swing.JLabel();
         startSubTitle1 = new javax.swing.JLabel();
-        startSubTitle2 = new javax.swing.JLabel();
         startEnterb = new javax.swing.JButton();
         newFileToggle = new javax.swing.JToggleButton();
 
@@ -41,7 +37,7 @@ public class startScreen extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(71, 0, 179));
 
-        directoryEntry.setText("e.g: C:\\Users\\Documents\\logins.txt");
+        directoryEntry.setText("e.g: C:\\Users\\Documents\\logins.txt K:\\save.txt");
         directoryEntry.setToolTipText("");
         directoryEntry.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -57,10 +53,6 @@ public class startScreen extends javax.swing.JFrame {
         startSubTitle1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         startSubTitle1.setForeground(new java.awt.Color(255, 255, 255));
         startSubTitle1.setText("Leave blank for default location.");
-
-        startSubTitle2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        startSubTitle2.setForeground(new java.awt.Color(255, 255, 255));
-        startSubTitle2.setText("If there is no default it will be placed in the project file");
 
         startEnterb.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         startEnterb.setText("Enter");
@@ -86,10 +78,7 @@ public class startScreen extends javax.swing.JFrame {
                         .addComponent(startTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(138, 138, 138)
-                        .addComponent(startSubTitle1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(74, 74, 74)
-                        .addComponent(startSubTitle2)))
+                        .addComponent(startSubTitle1)))
                 .addContainerGap(32, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(80, 80, 80)
@@ -105,9 +94,7 @@ public class startScreen extends javax.swing.JFrame {
                 .addComponent(startTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(startSubTitle1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(startSubTitle2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(directoryEntry, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -149,7 +136,8 @@ public class startScreen extends javax.swing.JFrame {
             if (save.newSave(directory)) {
                 SchoolCouncilLogin.saveDirectory = directory;
                 LoginGUI lgui = new LoginGUI();
-                lgui.show();
+                lgui.setUndecorated(true);
+                lgui.setVisible(true);
                 
                 this.dispose();
                 
@@ -162,9 +150,9 @@ public class startScreen extends javax.swing.JFrame {
         
         } else {
             LoginGUI lgui = new LoginGUI();
-            lgui.show();
-            //SchoolCouncilLogin closeSelfVar = new SchoolCouncilLogin();
-            //closeSelfVar.setSaveDirectory(directory);
+            
+            lgui.setVisible(true);
+            
             SchoolCouncilLogin.saveDirectory = directory;
             
             this.dispose();
@@ -212,7 +200,6 @@ public class startScreen extends javax.swing.JFrame {
     private javax.swing.JToggleButton newFileToggle;
     private javax.swing.JButton startEnterb;
     private javax.swing.JLabel startSubTitle1;
-    private javax.swing.JLabel startSubTitle2;
     private javax.swing.JLabel startTitle;
     // End of variables declaration//GEN-END:variables
 }

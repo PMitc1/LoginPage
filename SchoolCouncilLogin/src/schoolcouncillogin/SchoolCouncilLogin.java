@@ -6,8 +6,10 @@ package schoolcouncillogin;
 public class SchoolCouncilLogin {
     
     public static String saveDirectory; //K:\save.txt
+    public static String backupDirectory = "\\\\backups.txt";
     
     static startScreen startGUI = new startScreen();
+    
     
     
     //stores up to 100 logins at once. 
@@ -39,6 +41,10 @@ public class SchoolCouncilLogin {
                 startGUI.setVisible(true);
             }
         });
+        
+        //create a file with the default file location
+        
+        
     }
     
 }
